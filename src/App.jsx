@@ -107,15 +107,19 @@ function App() {
                 <span className="label-icon">◇</span>
                 Relationship
               </label>
-              <input
-                type="text"
+              <select
                 name="relation"
                 value={formData.relation}
                 onChange={handleChange}
                 className="cyber-input"
-                placeholder="Friend, Colleague, Client..."
                 required
-              />
+              >
+                <option value="" disabled className="bg-[#0a0a0c]">Select Relationship</option>
+                <option value="Friend" className="bg-[#0a0a0c]">Friend (Inner Circle)</option>
+                <option value="Family" className="bg-[#0a0a0c]">Family</option>
+                <option value="Professional" className="bg-[#0a0a0c]">Professional Colleague</option>
+                <option value="Stranger" className="bg-[#0a0a0c]">Acquaintance / Other</option>
+              </select>
               <div className="input-line"></div>
             </div>
 

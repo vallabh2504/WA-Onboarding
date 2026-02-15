@@ -34,8 +34,8 @@ def notify_telegram(data):
 *Number:* {data.get('number')}"""
 
     buttons = [
-        [{"text": "✅ Approve", "callback_data": f"approve:{data.get('number')}"},
-         {"text": "❌ Reject", "callback_data": f"reject:{data.get('number')}"}]
+        [{"text": "✅ Approve", "callback_data": f"approve:{data.get('number')}:{data.get('name')}:{data.get('relation')}"},
+         {"text": "❌ Reject", "callback_data": f"reject:{data.get('number')}:{data.get('name')}:{data.get('relation')}"}]
     ]
     
     cmd = [
@@ -43,12 +43,18 @@ def notify_telegram(data):
         "--channel", "telegram",
         "--target", BOT_USER_ID,
         "--message", message,
-        "--inline-buttons", json.dumps(buttons)
+        "--buttons", json.dumps(buttons)
     ]
     
     try:
         result = subprocess.run(cmd, capture_output=True, text=True)
         print(f"Telegram notification sent: {result.returncode}")
+        import sys
+        sys.stdout.flush()
+        if result.returncode != 0:
+            print(f"STDOUT: {result.stdout}")
+            print(f"STDERR: {result.stderr}")
+            sys.stdout.flush()
         return result.returncode == 0
     except Exception as e:
         print(f"Error sending telegram: {e}")
@@ -65,6 +71,8 @@ def handle_webhook():
     
     data = request.json
     print(f"Received request: {data}")
+    import sys
+    sys.stdout.flush()
     
     required = ["name", "relation", "number"]
     if not all(k in data for k in required):
