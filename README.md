@@ -1,16 +1,54 @@
-# React + Vite
+# WA Gatekeeper Onboarding App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimalist React app for requesting WhatsApp access to Vallabh.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone this repo
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start dev server:
+   ```bash
+   npm run dev
+   ```
+4. Deploy to Vercel (recommended) or Netlify
 
-## React Compiler
+## Webhook Configuration
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The app sends requests to:
+- **URL:** `https://attending-monica-becoming-motels.trycloudflare.com/webhook`
+- **Method:** POST
+- **Headers:**
+  - `Content-Type: application/json`
+  - `X-Webhook-Signature`: HMAC-SHA256 of JSON body
 
-## Expanding the ESLint configuration
+## Security
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Update `WEBHOOK_SECRET` in `src/App.jsx` to match your webhook server's secret:
+```javascript
+const WEBHOOK_SECRET = 'change-me-in-production'
+```
+
+## Testing
+
+```bash
+# Generate signature
+SIGNATURE=$(python3 -c "
+import hmac, hashlib, json
+secret = 'change-me-in-production'
+data = json.dumps({'name': 'John', 'relation': 'Friend', 'number': '+123456'}).encode()
+print(hmac.new(secret.encode(), data, hashlib.sha256).hexdigest())")
+
+# Send request
+curl -X POST https://attending-monica-becoming-motels.trycloudflare.com/webhook \
+  -H "Content-Type: application/json" \
+  -H "X-Webhook-Signature: $SIGNATURE" \
+  -d '{"name": "John", "relation": "Friend", "number": "+1234567890"}'
+```
+
+## Tech Stack
+- React + Vite
+- Tailwind CSS
+- Axios

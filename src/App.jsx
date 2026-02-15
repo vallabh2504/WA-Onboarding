@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 
 const WEBHOOK_URL = 'https://attending-monica-becoming-motels.trycloudflare.com/webhook'
-const WEBHOOK_SECRET = 'change-me-in-production'
+const WEBHOOK_SECRET = 'super-secret-change-me'
 
 async function generateSignature(payload) {
   const encoder = new TextEncoder()
