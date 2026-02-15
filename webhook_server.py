@@ -4,11 +4,13 @@ WA Gatekeeper Webhook Server
 Run this on your machine to receive onboarding requests.
 """
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import hmac
 import hashlib
 import os
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET", "super-secret-change-me")
 BOT_USER_ID = "456109422"  # Boss Garu's Telegram ID
 
@@ -31,7 +33,6 @@ def notify_telegram(data):
 *Relation:* {data.get('relation')}
 *Number:* {data.get('number')}"""
 
-    # Build buttons - simplified without JSON复杂 formatting
     buttons = [
         [{"text": "✅ Approve", "callback_data": f"approve:{data.get('number')}"},
          {"text": "❌ Reject", "callback_data": f"reject:{data.get('number')}"}]
@@ -65,12 +66,10 @@ def handle_webhook():
     data = request.json
     print(f"Received request: {data}")
     
-    # Validate required fields
     required = ["name", "relation", "number"]
     if not all(k in data for k in required):
         return jsonify({"error": "Missing required fields"}), 400
     
-    # Notify Boss Garu
     notify_telegram(data)
     
     return jsonify({"status": "received"}), 200
