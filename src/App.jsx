@@ -107,19 +107,28 @@ function App() {
                 <span className="label-icon">◇</span>
                 Relationship
               </label>
-              <select
-                name="relation"
-                value={formData.relation}
-                onChange={handleChange}
-                className="cyber-input"
-                required
-              >
-                <option value="" disabled className="bg-[#0a0a0c]">Select Relationship</option>
-                <option value="Friend" className="bg-[#0a0a0c]">Friend (Inner Circle)</option>
-                <option value="Family" className="bg-[#0a0a0c]">Family</option>
-                <option value="Professional" className="bg-[#0a0a0c]">Professional Colleague</option>
-                <option value="Stranger" className="bg-[#0a0a0c]">Acquaintance / Other</option>
-              </select>
+              <div className="grid grid-cols-2 gap-3 mt-2">
+                {[
+                  { id: 'Friend', label: 'Friend', icon: '👑' },
+                  { id: 'Family', label: 'Family', icon: '🏠' },
+                  { id: 'Professional', label: 'Professional', icon: '👔' },
+                  { id: 'Stranger', label: 'Other', icon: '👋' }
+                ].map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, relation: option.id })}
+                    className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all duration-300 ${
+                      formData.relation === option.id
+                        ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.3)]'
+                        : 'bg-[#121214] border-gray-800 text-gray-400 hover:border-gray-600'
+                    }`}
+                  >
+                    <span className="text-xl mb-1">{option.icon}</span>
+                    <span className="text-[10px] uppercase tracking-wider font-semibold">{option.label}</span>
+                  </button>
+                ))}
+              </div>
               <div className="input-line"></div>
             </div>
 
