@@ -81,7 +81,6 @@ function App() {
               <div className="logo-pulse"></div>
             </div>
             <h1 className="title">WA Gatekeeper</h1>
-            <p className="subtitle">Request access to message Vallabh</p>
           </div>
 
           <form onSubmit={handleSubmit} className="form">
@@ -118,14 +117,14 @@ function App() {
                     key={option.id}
                     type="button"
                     onClick={() => setFormData({ ...formData, relation: option.id })}
-                    className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all duration-300 ${
+                    className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                       formData.relation === option.id
-                        ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.3)]'
-                        : 'bg-[#121214] border-gray-800 text-gray-400 hover:border-gray-600'
+                        ? 'bg-gradient-to-br from-cyan-500/40 to-purple-500/40 border-cyan-400 text-white shadow-[0_0_25px_rgba(34,211,238,0.5)] scale-105 z-10'
+                        : 'bg-white/5 border-white/10 text-white/90 hover:border-white/30'
                     }`}
                   >
-                    <span className="text-xl mb-1">{option.icon}</span>
-                    <span className="text-[10px] uppercase tracking-wider font-semibold">{option.label}</span>
+                    <span className="text-2xl mb-2 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">{option.icon}</span>
+                    <span className="text-[12px] uppercase tracking-[0.15em] font-bold text-white leading-tight">{option.label}</span>
                   </button>
                 ))}
               </div>
