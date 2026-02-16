@@ -416,6 +416,138 @@ body {
   100% { transform: translateX(100%); }
 }
 
+/* Relation Buttons Rework */
+.relation-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+  clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0% 30%);
+}
+
+.relation-btn-cyan { --btn-color: var(--cyber-cyan); }
+.relation-btn-magenta { --btn-color: var(--cyber-magenta); }
+.relation-btn-purple { --btn-color: var(--cyber-purple); }
+
+.relation-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.relation-btn.active {
+  background: rgba(var(--btn-color), 0.1);
+  border-color: var(--btn-color);
+  box-shadow: 0 0 20px rgba(var(--btn-color), 0.2);
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* Fix active state for specific colors since CSS vars in hex don't work with rgba() easily here */
+.relation-btn-cyan.active { background: rgba(0, 240, 255, 0.1); border-color: #00f0ff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+.relation-btn-magenta.active { background: rgba(255, 0, 170, 0.1); border-color: #ff00aa; box-shadow: 0 0 15px rgba(255, 0, 170, 0.3); }
+.relation-btn-purple.active { background: rgba(139, 0, 255, 0.1); border-color: #8b00ff; box-shadow: 0 0 15px rgba(139, 0, 255, 0.3); }
+
+.btn-icon-wrapper {
+  position: relative;
+  font-size: 24px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.relation-btn.active .btn-icon-wrapper {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 12px var(--btn-color));
+}
+
+.btn-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.relation-btn.active .btn-text {
+  color: #fff;
+  text-shadow: 0 0 10px var(--btn-color);
+}
+
+.btn-border-corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+  border-top-color: rgba(255, 255, 255, 0.1);
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  border-right-color: rgba(255, 255, 255, 0.1);
+}
+
+.relation-btn.active .top-left { border-top-color: var(--btn-color); border-left-color: var(--btn-color); }
+.relation-btn.active .bottom-right { border-bottom-color: var(--btn-color); border-right-color: var(--btn-color); }
+
+/* Glitch Effect for Active Button */
+.btn-glitch-layers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.relation-btn.active .btn-glitch-layers {
+  display: block;
+}
+
+.btn-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--btn-color);
+  opacity: 0;
+}
+
+.relation-btn.active:hover .btn-layer:nth-child(1) {
+  animation: glitch-anim 0.3s infinite;
+  opacity: 0.1;
+  transform: translateX(-2px);
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .cyber-card {

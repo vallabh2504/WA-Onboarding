@@ -106,25 +106,32 @@ function App() {
                 <span className="label-icon">◇</span>
                 Relationship
               </label>
-              <div className="grid grid-cols-2 gap-3 mt-2">
+              <div className="grid grid-cols-2 gap-4 mt-2">
                 {[
-                  { id: 'Friend', label: 'Friend', icon: '👑' },
-                  { id: 'Family', label: 'Family', icon: '🏠' },
-                  { id: 'Professional', label: 'Professional', icon: '👔' },
-                  { id: 'Stranger', label: 'Other', icon: '👋' }
+                  { id: 'Friend', label: 'Friend', icon: '👑', color: 'cyan' },
+                  { id: 'Family', label: 'Family', icon: '🏠', color: 'magenta' },
+                  { id: 'Professional', label: 'Professional', icon: '👔', color: 'purple' },
+                  { id: 'Stranger', label: 'Other', icon: '👋', color: 'cyan' }
                 ].map((option) => (
                   <button
                     key={option.id}
                     type="button"
                     onClick={() => setFormData({ ...formData, relation: option.id })}
-                    className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-                      formData.relation === option.id
-                        ? 'bg-gradient-to-br from-cyan-500/40 to-purple-500/40 border-cyan-400 text-white shadow-[0_0_25px_rgba(34,211,238,0.5)] scale-105 z-10'
-                        : 'bg-white/5 border-white/10 text-white/90 hover:border-white/30'
+                    className={`relation-btn relation-btn-${option.color} ${
+                      formData.relation === option.id ? 'active' : ''
                     }`}
                   >
-                    <span className="text-2xl mb-2 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">{option.icon}</span>
-                    <span className="text-[12px] uppercase tracking-[0.15em] font-bold text-white leading-tight">{option.label}</span>
+                    <div className="btn-glitch-layers">
+                      <div className="btn-layer"></div>
+                      <div className="btn-layer"></div>
+                      <div className="btn-layer"></div>
+                    </div>
+                    <span className="btn-icon-wrapper">
+                      <span className="btn-icon">{option.icon}</span>
+                    </span>
+                    <span className="btn-text">{option.label}</span>
+                    <div className="btn-border-corner top-left"></div>
+                    <div className="btn-border-corner bottom-right"></div>
                   </button>
                 ))}
               </div>
